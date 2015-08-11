@@ -1,0 +1,6 @@
+1.1.0
+  Added /s strict mode parameter
+  Added /? and /h as help parameters
+
+1.0.0
+  Initial release
