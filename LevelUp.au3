@@ -25,10 +25,10 @@ $bRename = False
 $bStrict = False
 
 If $cmdline[0] = 0 Or $cmdline[1] == "/h" Or $cmdline[1] == "/?" Then
-	ConsoleWrite("LevelUp Version 1.1.0, 2015 by Bioruebe, licensed under a BSD 3-clause license" & @CRLF & @CRLF & _
+	ConsoleWrite("LevelUp, version 1.1.1, 2016 by Bioruebe, licensed under a BSD 3-clause license" & @CRLF & @CRLF & _
 				 "A tool to delete all empty subfolders of a given input path and remove folders only containing one file after moving this file one level up. The initial folder will not be deleted." & _
 				 @CRLF & @CRLF & "Usage: " & @CRLF & @TAB & @ScriptName & " [options] startfolder" & @CRLF & @CRLF & _
-				 "   options:" & @CRLF & @TAB & "/? or /h" & @TAB & "Display this help screen" & @CRLF & @CRLF & @TAB & "/r" & _
+				 "   Options:" & @CRLF & @TAB & "/? or /h" & @TAB & "Display this help screen" & @CRLF & @CRLF & @TAB & "/r" & _
 				 @TAB & @TAB & "Rename moved files after their initial folder" & @CRLF & @TAB & @TAB & @TAB & _
 				 "e.g. dir\foo\bar.txt will be renamed to dir\foo_bar.txt" & @CRLF & @CRLF & @TAB & "/s" & @TAB & @TAB & _
 				 "Strict mode: files are only moved if no other files AND" & @CRLF & @TAB & @TAB & @TAB & _
@@ -36,12 +36,12 @@ If $cmdline[0] = 0 Or $cmdline[1] == "/h" Or $cmdline[1] == "/?" Then
 	Exit 0
 Else
 	$sStartFolder = $cmdline[$cmdline[0]]
-	For $i = $cmdline[0] -1 To 1 Step -1
+	For $i = $cmdline[0] To 1 Step -1
 ;~ 		Cout($cmdline[$i])
 		Switch $cmdline[$i]
-			Case "/r"
+			Case "/r", "-r"
 				$bRename = True
-			Case "/s"
+			Case "/s", "-s"
 				$bStrict = True
 		EndSwitch
 	Next
@@ -49,14 +49,14 @@ EndIf
 
 ;~ $sStartFolder = @ScriptDir & "\test\"
 
+Cout("Strict mode: " & @TAB & $bStrict)
+Cout("Rename: " & @TAB & $bRename)
+
 ; Verify input
 If Not (FileExists($sStartFolder) And StringInStr(FileGetAttrib($sStartFolder), "D")) Then
 	Cout("Input path is not a valid folder", True)
 	Exit 1
 EndIf
-
-Cout("Strict mode: " & @TAB & $bStrict)
-Cout("Rename: " & @TAB & $bRename)
 
 _Recurse($sStartFolder)
 ConsoleWrite(@CRLF)

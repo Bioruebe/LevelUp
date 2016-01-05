@@ -1,3 +1,7 @@
+1.1.1
+  Added BioLUR
+  Fixed command line parsing ignoring last parameter
+
 1.1.0
   Added /s strict mode parameter
   Added /? and /h as help parameters
